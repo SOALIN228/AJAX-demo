@@ -3,28 +3,28 @@ window.jQuery = function (nodeOrSelector) {
   return nodes
 }
 
-window.$ = window.jQuery
-
-window.jQuery.ajax = function (url, method, body, successFn, failFn) {
+window.jQuery.ajax = function ajax (method, url, body, successFn, failFn) {
   let request = new XMLHttpRequest()
+
   request.open(method, url)
 
-  request.onreadystatechange = () => {
+  request.onreadystatechange = function () {
     if (request.readyState === 4) {
       if (request.status >= 200 && request.status < 300) {
         successFn.call(undefined, request.responseText)
-      } else if (request.status >= 400 && request.status < 500) {
+      } else {
         failFn.call(undefined, request)
       }
     }
-    request.send(body)
   }
+
+  request.send(body)
 }
 
 myButton.addEventListener('click', function () {
-  $.ajax('xxx', 'post', 'a=1&b=2', () => {
-    console.log('success')
+  window.jQuery.ajax('post', '/xxx', 'a=1&b=2', () => {
+    console.log('请求成功了')
   }, () => {
-    console.log('error')
+    console.log('请求失败了')
   })
 })
