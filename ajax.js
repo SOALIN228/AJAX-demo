@@ -1,9 +1,3 @@
-# AJAX-demo
-封装一个ajax
-
-## 第一版
-
-```javascript
 window.jQuery = function (nodeOrSelector) {
   let nodes = {}
   return nodes
@@ -34,5 +28,3 @@ myButton.addEventListener('click', function () {
     console.log('error')
   })
 })
-```
-
