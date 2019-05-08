@@ -3,16 +3,22 @@ window.jQuery = function (nodeOrSelector) {
   return nodes
 }
 
-window.jQuery.ajax = function ajax (method, url, body, successFn, failFn) {
-  let request = new XMLHttpRequest()
+window.jQuery.ajax = function (options) {
 
+  let method = options.method
+  let url = options.url
+  let body = options.body
+  let successFn = options.successFn
+  let failFn = options.failFn
+
+  let request = new XMLHttpRequest()
   request.open(method, url)
 
-  request.onreadystatechange = function () {
+  request.onreadystatechange = () => {
     if (request.readyState === 4) {
       if (request.status >= 200 && request.status < 300) {
         successFn.call(undefined, request.responseText)
-      } else {
+      } else if (request.status >= 400 && request.status < 500) {
         failFn.call(undefined, request)
       }
     }
@@ -22,9 +28,17 @@ window.jQuery.ajax = function ajax (method, url, body, successFn, failFn) {
 }
 
 myButton.addEventListener('click', function () {
-  window.jQuery.ajax('post', '/xxx', 'a=1&b=2', () => {
-    console.log('请求成功了')
-  }, () => {
-    console.log('请求失败了')
+  window.jQuery.ajax({
+    method: 'post',
+    url: '/xxx',
+    body: 'a=1&b=2',
+    successFn: (x) => {
+      console.log(x)
+      console.log('请求成功了')
+    }
+    ,
+    failFn: () => {
+      console.log('请求失败了')
+    }
   })
 })
