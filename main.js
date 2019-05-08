@@ -3,13 +3,9 @@ window.jQuery = function (nodeOrSelector) {
   return nodes
 }
 
-window.jQuery.ajax = function (options) {
-
-  let method = options.method
-  let url = options.url
-  let body = options.body
-  let successFn = options.successFn
-  let failFn = options.failFn
+window.jQuery.ajax = function ({method,url,body,successFn,failFn}/*options*/) {
+  // es6 结构赋值，只有一次可以放在function中
+  // let {method,url,body,successFn,failFn} = options
 
   let request = new XMLHttpRequest()
   request.open(method, url)
